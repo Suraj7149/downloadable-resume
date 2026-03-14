@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Suraj Gupta — Web Developer</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0c0c10;
+    --surface: #12121a;
+    --surface2: #16161f;
+    --border: rgba(255,255,255,0.07);
+    --accent: #7fff6e;
+    --accent2: #4fc3f7;
+    --accent3: #ff7eb9;
+    --text: #e8e8f0;
+    --muted: #7a7a90;
+    --tag-bg: rgba(127,255,110,0.08);
+    --tag-border: rgba(127,255,110,0.22);
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    line-height: 1.65;
+    min-height: 100vh;
+    padding: 48px 24px;
+  }
+
+  .page { max-width: 960px; margin: 0 auto; }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .a1 { animation: fadeUp 0.6s 0.05s ease both; }
+  .a2 { animation: fadeUp 0.6s 0.15s ease both; }
+  .a3 { animation: fadeUp 0.6s 0.25s ease both; }
+  .a4 { animation: fadeUp 0.6s 0.35s ease both; }
+  .a5 { animation: fadeUp 0.6s 0.45s ease both; }
+
+  /* ── HEADER ── */
+  .header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    gap: 32px;
+    padding-bottom: 36px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 40px;
+    position: relative;
+  }
+  .header::after {
+    content: '';
+    position: absolute;
+    bottom: -1px; left: 0;
+    width: 160px; height: 2px;
+    background: linear-gradient(90deg, var(--accent), transparent);
+  }
+
+  .eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    font-style: italic;
+  }
+
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(38px, 5.5vw, 64px);
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    color: #fff;
+  }
+  h1 em {
+    display: block;
+    color: var(--accent);
+    font-style: italic;
+  }
+
+  .tagline {
+    margin-top: 16px;
+    color: #8888aa;
+    font-size: 11.5px;
+    max-width: 460px;
+    font-style: italic;
+    line-height: 1.8;
+  }
+
+  .contact-block {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    align-items: flex-end;
+  }
+  .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--muted);
+    font-size: 11.5px;
+    transition: color 0.2s;
+  }
+  .contact-item a { color: inherit; text-decoration: none; }
+  .contact-item:hover { color: var(--accent2); }
+  .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+
+  /* ── BODY GRID ── */
+  .body-grid {
+    display: grid;
+    grid-template-columns: 1fr 272px;
+    gap: 48px;
+  }
+
+  /* ── SECTION LABEL ── */
+  .section-label {
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-label::after {
+    content: ''; flex: 1; height: 1px; background: var(--border);
+  }
+
+  section { margin-bottom: 36px; }
+
+  /* ── SUMMARY BOX ── */
+  .summary-box {
+    padding: 18px 20px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: 8px;
+    color: #a0a0bc;
+    font-size: 12px;
+    line-height: 1.85;
+  }
+
+  /* ── EXP CARDS ── */
+  .exp-item {
+    padding: 18px 20px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    margin-bottom: 12px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.25s, transform 0.2s;
+  }
+  .exp-item::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px; height: 100%;
+    background: var(--accent);
+    opacity: 0;
+    transition: opacity 0.25s;
+  }
+  .exp-item:hover { border-color: rgba(127,255,110,0.2); transform: translateX(3px); }
+  .exp-item:hover::before { opacity: 1; }
+
+  .exp-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 4px;
+  }
+  .exp-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    color: #fff;
+  }
+  .exp-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+  }
+  .exp-company { color: var(--accent2); font-size: 12px; }
+  .exp-date {
+    font-size: 10.5px;
+    color: var(--muted);
+    padding: 2px 8px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+  .exp-location { font-size: 10.5px; color: var(--muted); }
+
+  .sub-project-label {
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent3);
+    margin-bottom: 8px;
+    margin-top: 4px;
+  }
+
+  .exp-bullets { list-style: none; display: flex; flex-direction: column; gap: 5px; }
+  .exp-bullets li {
+    color: #a8a8c0;
+    font-size: 12px;
+    padding-left: 16px;
+    position: relative;
+  }
+  .exp-bullets li::before {
+    content: '→';
+    position: absolute; left: 0;
+    color: var(--accent); font-size: 10px; top: 2px;
+  }
+  .exp-bullets li strong { color: #d8d8f0; font-weight: 500; }
+
+  /* ── PROJECTS ── */
+  .project-item {
+    padding: 16px 20px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    margin-bottom: 10px;
+    transition: border-color 0.25s;
+    position: relative;
+  }
+  .project-item.nda { border-left: 3px solid rgba(255, 126, 185, 0.4); }
+  .project-item.public { border-left: 3px solid rgba(79,195,247,0.4); }
+  .project-item:hover { border-color: rgba(79,195,247,0.25); }
+
+  .project-header { display: flex; align-items: center; gap: 10px; margin-bottom: 5px; flex-wrap: wrap; }
+  .project-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 14px; color: #fff; }
+  .nda-badge {
+    font-size: 9.5px; padding: 2px 7px;
+    background: rgba(255,126,185,0.08);
+    border: 1px solid rgba(255,126,185,0.25);
+    color: var(--accent3);
+    border-radius: 3px;
+    letter-spacing: 0.08em;
+  }
+  .project-link {
+    font-size: 10px; color: var(--accent2); text-decoration: none;
+    padding: 2px 7px; border: 1px solid rgba(79,195,247,0.3); border-radius: 3px;
+    transition: background 0.2s;
+  }
+  .project-link:hover { background: rgba(79,195,247,0.1); }
+
+  .stack-line {
+    font-size: 11px; color: var(--muted); margin-bottom: 8px;
+  }
+  .stack-line span { color: var(--accent2); }
+
+  .project-bullets { list-style: none; display: flex; flex-direction: column; gap: 4px; }
+  .project-bullets li {
+    color: #a0a0bc; font-size: 11.5px; padding-left: 15px; position: relative;
+  }
+  .project-bullets li::before { content: '›'; position: absolute; left: 0; color: var(--accent2); font-size: 13px; top: -1px; }
+  .project-bullets li strong { color: #c8c8e0; font-weight: 500; }
+
+  /* ── TAGS ── */
+  .tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 10px; }
+  .tag {
+    font-size: 10.5px;
+    background: var(--tag-bg);
+    border: 1px solid var(--tag-border);
+    color: var(--accent);
+    padding: 2px 8px; border-radius: 3px;
+  }
+  .tag.blue { background: rgba(79,195,247,0.07); border-color: rgba(79,195,247,0.22); color: var(--accent2); }
+  .tag.pink { background: rgba(255,126,185,0.07); border-color: rgba(255,126,185,0.22); color: var(--accent3); }
+
+  /* ── SIDEBAR ── */
+  .availability {
+    display: inline-flex; align-items: center; gap: 7px;
+    padding: 7px 14px;
+    background: rgba(127,255,110,0.07);
+    border: 1px solid rgba(127,255,110,0.2);
+    border-radius: 6px;
+    font-size: 11px; color: var(--accent);
+    margin-bottom: 24px;
+  }
+  .pulse {
+    width: 7px; height: 7px; border-radius: 50%; background: var(--accent);
+    animation: pulse 1.8s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%,100% { opacity:1; transform:scale(1); }
+    50% { opacity:0.3; transform:scale(0.65); }
+  }
+
+  .side-label {
+    font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 14px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .side-label::after { content:''; flex:1; height:1px; background:var(--border); }
+
+  .skill-group { margin-bottom: 16px; }
+  .skill-group-name { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+  .skill-list { display: flex; flex-wrap: wrap; gap: 5px; }
+
+  .edu-item {
+    padding: 14px 16px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    margin-bottom: 8px;
+  }
+  .edu-degree { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 12.5px; color: #fff; margin-bottom: 3px; }
+  .edu-school { color: var(--accent2); font-size: 11.5px; margin-bottom: 2px; }
+  .edu-date { color: var(--muted); font-size: 11px; }
+
+  .lang-item {
+    display: flex; justify-content: space-between;
+    padding: 7px 0; border-bottom: 1px solid var(--border); font-size: 12px;
+  }
+  .lang-item:last-child { border-bottom: none; }
+  .lang-level { color: var(--muted); font-size: 11px; }
+
+  @media print {
+    body { background:#fff; color:#111; padding:20px; }
+    :root { --bg:#fff; --surface:#f6f6f8; --border:#ddd; --accent:#1a7a14; --accent2:#0f5fa0; --accent3:#c0306a; --text:#111; --muted:#666; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <header class="header a1">
+    <div>
+      <p class="eyebrow">// React &amp; Frontend Developer · Delhi, India</p>
+      <h1>Suraj<em>Gupta.</em></h1>
+      <p class="tagline">React / Frontend Developer with hands-on experience building scalable SaaS platforms, admin dashboards, and productivity tools. Passionate about animations, RBAC systems, and shipping things that work beautifully.</p>
+    </div>
+    <div class="contact-block">
+      <div class="contact-item"><span class="dot"></span><a href="mailto:suraj.gupta7149@outlook.com">suraj.gupta7149@outlook.com</a></div>
+      <div class="contact-item"><span class="dot"></span>+91 98795 65141</div>
+      <div class="contact-item"><span class="dot"></span><a href="https://protfoliowebsitesuraj.netlify.app/" target="_blank">protfoliowebsitesuraj.netlify.app</a></div>
+      <div class="contact-item"><span class="dot"></span>Delhi, India</div>
+    </div>
+  </header>
+
+  <!-- BODY -->
+  <div class="body-grid">
+    <main>
+
+      <!-- SUMMARY -->
+      <section class="a2">
+        <p class="section-label">Summary</p>
+        <div class="summary-box">
+          React / Frontend Developer with hands-on experience building scalable SaaS platforms, admin dashboards, and productivity tools. Skilled in developing modular, responsive user interfaces using React, with strong understanding of component-based architecture, role-based access control (RBAC), and API-driven applications. Experienced in crafting smooth and interactive user experiences using modern animation libraries such as GSAP, Framer Motion, and Anime.js. Also contributed to cross-platform mobile application development using React Native.
+        </div>
+      </section>
+
+      <!-- EXPERIENCE -->
+      <section class="a2">
+        <p class="section-label">Experience</p>
+
+        <!-- BrandKing -->
+        <div class="exp-item">
+          <div class="exp-header">
+            <div class="exp-title">Web Developer</div>
+            <span class="exp-date">Dec 2025 – Present</span>
+          </div>
+          <div class="exp-meta">
+            <span class="exp-company">BrandKing Media</span>
+            <span class="exp-location">· Remote</span>
+          </div>
+          <p class="sub-project-label">Key Project — School ERP SaaS Platform</p>
+          <ul class="exp-bullets">
+            <li>Developed a <strong>School ERP SaaS platform</strong> using React and REST APIs with scalable state management via Redux Toolkit and Zustand.</li>
+            <li>Built <strong>modular and reusable UI components</strong> to improve maintainability and performance across 12+ ERP modules.</li>
+            <li>Developed the <strong>mobile application using React Native and NativeWind</strong> for Android support.</li>
+            <li>Integrated backend APIs for managing students, staff, attendance, and academic data.</li>
+            <li>Developed high-conversion marketing websites using HTML, CSS, JavaScript, and Next.js.</li>
+            <li>Implemented <strong>advanced animations using GSAP and ScrollTrigger</strong> to improve user engagement.</li>
+            <li>Optimized performance, responsiveness, and cross-browser compatibility across all deliverables.</li>
+          </ul>
+        </div>
+
+        <!-- Saber Technologies -->
+        <div class="exp-item">
+          <div class="exp-header">
+            <div class="exp-title">IT Executive</div>
+            <span class="exp-date">Jun 2024 – Aug 2025</span>
+          </div>
+          <div class="exp-meta">
+            <span class="exp-company">Saber Technologies Pvt. Ltd.</span>
+            <span class="exp-location">· Noida, India</span>
+          </div>
+          <ul class="exp-bullets">
+            <li>Developed internal web applications using <strong>React and Node.js</strong> for company intranet systems.</li>
+            <li>Built a <strong>Chrome extension</strong> to improve employee productivity and workflow automation.</li>
+            <li>Managed servers and IT infrastructure compliance; conducted regular system audits and performance monitoring.</li>
+            <li>Monitored and maintained network devices, PCs, and internal IT resources.</li>
+          </ul>
+        </div>
+
+        <!-- Interop -->
+        <div class="exp-item">
+          <div class="exp-header">
+            <div class="exp-title">HL7 Interface Support &amp; Analyst</div>
+            <span class="exp-date">Oct 2022 – Dec 2023</span>
+          </div>
+          <div class="exp-meta">
+            <span class="exp-company">Interop Digital Services</span>
+          </div>
+          <div class="tags" style="margin-bottom:10px;">
+            <span class="tag pink">HL7</span><span class="tag pink">Mirth Connect</span>
+            <span class="tag pink">Jira</span><span class="tag pink">MS SQL Server</span><span class="tag pink">Azure</span>
+          </div>
+          <ul class="exp-bullets">
+            <li>Migrated healthcare integration sites to updated <strong>Mirth Connect architecture</strong>.</li>
+            <li>Monitored and resolved integration issues using HL7 interface logs and system diagnostics.</li>
+            <li>Analyzed JavaScript-based interface logic and maintained interface configurations.</li>
+            <li>Managed SQL entries and maintained operational databases for system integrations.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- PROJECTS -->
+      <section class="a3">
+        <p class="section-label">Projects</p>
+
+        <div class="project-item nda">
+          <div class="project-header">
+            <span class="project-name">Enterprise School ERP Platform</span>
+            <span class="nda-badge">NDA Protected</span>
+          </div>
+          <p class="stack-line">Stack: <span>React · Tailwind CSS · GSAP · React Native · Redux · REST APIs</span></p>
+          <ul class="project-bullets">
+            <li>Multi-module ERP with <strong>Admin, Teacher, and Student dashboards</strong> and configurable RBAC profiles.</li>
+            <li>Built <strong>70+ responsive screens across 12 ERP modules</strong>: Academics, Exams &amp; Marks, Fees, HR, Library, Attendance, Front Office.</li>
+            <li>Features: <strong>attendance tracking, marks management, certificate generation</strong>, and animated GSAP dashboards.</li>
+            <li>Delivered companion <strong>React Native mobile app</strong> for students and teachers with academic data and notifications.</li>
+          </ul>
+        </div>
+
+        <div class="project-item nda">
+          <div class="project-header">
+            <span class="project-name">Internal Operations Dashboard</span>
+            <span class="nda-badge">NDA Protected</span>
+          </div>
+          <p class="stack-line">Stack: <span>React · Tailwind CSS · PHP · MySQL · REST APIs</span></p>
+          <ul class="project-bullets">
+            <li>Enterprise admin dashboard for managing schools, subscriptions, and support operations.</li>
+            <li><strong>OTP-based authentication</strong>, RBAC, and 20+ operational screens including leads, tickets, and employee management.</li>
+            <li><strong>Analytics dashboards with animated charts</strong>, advanced search/filtering for large datasets, and activity logs.</li>
+          </ul>
+        </div>
+
+        <div class="project-item nda">
+          <div class="project-header">
+            <span class="project-name">ERP SaaS Marketing Website</span>
+            <span class="nda-badge">NDA Protected</span>
+          </div>
+          <ul class="project-bullets">
+            <li><strong>12+ page responsive marketing website</strong> with CMS integration for SEO articles and content management.</li>
+            <li>SEO-friendly architecture, blog modules, and mobile-first responsive layouts across all device sizes.</li>
+          </ul>
+        </div>
+
+        <div class="project-item nda">
+          <div class="project-header">
+            <span class="project-name">3× Conversion-Focused Client Websites</span>
+            <span class="nda-badge">NDA Protected</span>
+          </div>
+          <ul class="project-bullets">
+            <li>High-conversion marketing sites for real estate and industrial product businesses.</li>
+            <li>Property listing galleries, inquiry forms, CTA-driven UI design, and cross-device responsive layouts.</li>
+          </ul>
+        </div>
+
+        <div class="project-item public">
+          <div class="project-header">
+            <span class="project-name">Interactive Gaming Landing Page</span>
+            <a class="project-link" href="https://awwwardsclonezentry.netlify.app/" target="_blank">↗ Live</a>
+          </div>
+          <p class="stack-line">Stack: <span>React · GSAP · ScrollTrigger · Tailwind CSS</span></p>
+          <ul class="project-bullets">
+            <li>Awwwards-inspired animated landing page with <strong>scroll-synchronized GSAP timelines and pinned sections</strong>.</li>
+            <li>Interactive <strong>hero video switching system</strong> and fullscreen scroll transitions for immersive storytelling UI.</li>
+          </ul>
+          <div class="tags">
+            <span class="tag">React</span><span class="tag">GSAP</span><span class="tag blue">ScrollTrigger</span><span class="tag">Tailwind</span>
+          </div>
+        </div>
+
+        <div class="project-item public">
+          <div class="project-header">
+            <span class="project-name">Interactive Restaurant Website</span>
+            <a class="project-link" href="https://htmlcssrestaurantdemo.netlify.app/" target="_blank">↗ Live</a>
+          </div>
+          <p class="stack-line">Stack: <span>HTML5 · CSS3 · JavaScript</span></p>
+          <ul class="project-bullets">
+            <li>Fully responsive landing page with <strong>hero image slider, overlay navigation, and parallax effects</strong>.</li>
+            <li>Scroll-triggered UI elements, sticky nav, lazy loading, and image preloading for performance.</li>
+          </ul>
+          <div class="tags">
+            <span class="tag blue">HTML5</span><span class="tag blue">CSS3</span><span class="tag blue">JavaScript</span>
+          </div>
+        </div>
+
+      </section>
+    </main>
+
+    <!-- SIDEBAR -->
+    <aside class="a4">
+
+      <div class="availability">
+        <div class="pulse"></div>
+        Open to opportunities
+      </div>
+
+      <!-- SKILLS -->
+      <section>
+        <p class="side-label">Skills</p>
+
+        <div class="skill-group">
+          <div class="skill-group-name">Frontend</div>
+          <div class="skill-list">
+            <span class="tag">React</span>
+            <span class="tag">Next.js</span>
+            <span class="tag">React Native</span>
+            <span class="tag">HTML5</span>
+            <span class="tag">CSS3</span>
+            <span class="tag">Tailwind CSS</span>
+          </div>
+        </div>
+
+        <div class="skill-group">
+          <div class="skill-group-name">Animations</div>
+          <div class="skill-list">
+            <span class="tag pink">GSAP</span>
+            <span class="tag pink">ScrollTrigger</span>
+            <span class="tag pink">Framer Motion</span>
+            <span class="tag pink">Anime.js</span>
+          </div>
+        </div>
+
+        <div class="skill-group">
+          <div class="skill-group-name">State Management</div>
+          <div class="skill-list">
+            <span class="tag">Redux Toolkit</span>
+            <span class="tag">Zustand</span>
+            <span class="tag">Context API</span>
+          </div>
+        </div>
+
+        <div class="skill-group">
+          <div class="skill-group-name">Backend</div>
+          <div class="skill-list">
+            <span class="tag blue">Node.js</span>
+            <span class="tag blue">Express.js</span>
+            <span class="tag blue">Laravel</span>
+            <span class="tag blue">PHP</span>
+          </div>
+        </div>
+
+        <div class="skill-group">
+          <div class="skill-group-name">Databases &amp; APIs</div>
+          <div class="skill-list">
+            <span class="tag blue">MySQL</span>
+            <span class="tag blue">MongoDB</span>
+            <span class="tag blue">REST APIs</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- EDUCATION -->
+      <section>
+        <p class="side-label">Education</p>
+        <div class="edu-item">
+          <div class="edu-degree">Bachelor in Computer Application</div>
+          <div class="edu-school">Indira Gandhi National Open University</div>
+          <div class="edu-date">Jun 2020 – Mar 2026 · Delhi, India</div>
+        </div>
+        <div class="edu-item">
+          <div class="edu-degree">Class 12th — Science</div>
+          <div class="edu-school">Kendriya Vidyalaya Harni Road Vadodara</div>
+          <div class="edu-date">Mar 2019 – Mar 2020 · 80.2%</div>
+        </div>
+      </section>
+
+      <!-- CERTIFICATIONS -->
+      <section>
+        <p class="side-label">Certifications</p>
+        <div class="edu-item">
+          <div class="edu-degree">The Complete Web Development Bootcamp</div>
+          <div class="edu-school" style="color:var(--accent3);">Udemy</div>
+        </div>
+      </section>
+
+      <!-- HIGHLIGHTS -->
+      <section>
+        <p class="side-label">Highlights</p>
+        <div class="exp-item" style="margin-bottom:8px; padding:12px 14px;">
+          <div style="font-size:11px; color:#a0a0bc; line-height:1.7;">
+            <div style="color:var(--accent); font-size:10px; letter-spacing:0.1em; margin-bottom:4px;">SCALE</div>
+            70+ screens · 12 ERP modules · 3+ client sites
+          </div>
+        </div>
+        <div class="exp-item" style="margin-bottom:8px; padding:12px 14px;">
+          <div style="font-size:11px; color:#a0a0bc; line-height:1.7;">
+            <div style="color:var(--accent2); font-size:10px; letter-spacing:0.1em; margin-bottom:4px;">SPECIALTY</div>
+            Complex animations · RBAC systems · SaaS architecture
+          </div>
+        </div>
+        <div class="exp-item" style="padding:12px 14px;">
+          <div style="font-size:11px; color:#a0a0bc; line-height:1.7;">
+            <div style="color:var(--accent3); font-size:10px; letter-spacing:0.1em; margin-bottom:4px;">PLATFORMS</div>
+            Web · Mobile (Android) · Chrome Extension
+          </div>
+        </div>
+      </section>
+
+      <!-- LANGUAGES -->
+      <section>
+        <p class="side-label">Languages</p>
+        <div class="lang-item"><span>Hindi</span><span class="lang-level">Native</span></div>
+        <div class="lang-item"><span>English</span><span class="lang-level">Professional</span></div>
+      </section>
+
+    </aside>
+  </div>
+</div>
+</body>
+</html>
